@@ -1,0 +1,58 @@
+---------------------use this link to create a code for the current client------------------ make sure to add authorised uri: http://localhost and test user permission-----
+https://accounts.google.com/o/oauth2/v2/auth?
+ scope=https://www.googleapis.com/auth/spreadsheets&
+ access_type=offline&
+ include_granted_scopes=true&
+ response_type=code&
+ state=state_parameter_passthrough_value&
+ redirect_uri=http://localhost&
+ client_id=411723988585-8are1ehf1f8r5b2rkim4s941i86atmo6.apps.googleusercontent.com
+----result-----
+http://localhost/?state=state_parameter_passthrough_value&code=4/0AWgavdeeETABNRiMybCnY9WNywPWHBLPsrFzUD1i4suK00J6nhJ_AbHhXeLk70BbPpQZZA&scope=https://www.googleapis.com/auth/spreadsheets
+**extract the code*** from url Received
+code--4/0AWgavdc6P7X5PaAOgEXHoQOM-XmpxdxekGke8cb-P8DUEyF2MpsR95u1XLEtpYvKbMFb6w
+-------------------------------------------------------------------------
+
+*********************************************************************************************************************************************************************************
+---------------------use this after create code add required fields use curl commands in gitbash-------------------------------------------------
+curl \
+--request POST \
+--data "code=4/0AWgavddhwEeYM72emeqEsZ-TQAC4E-4Myy7QePYn1nSDzYQrjr7Mxy57Cuct_9Z1Dc558w&client_id=411723988585-8are1ehf1f8r5b2rkim4s941i86atmo6.apps.googleusercontent.com&client_secret=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&redirect_uri=http://localhost&grant_type=authorization_code" \
+https://accounts.google.com/o/oauth2/token
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+RESULT:
+{
+  "access_token": "ya29.a0AX9GBdVrXfh_MZhFdz-8JYPM5IjBVuN_GGGUBdgfzxfEgvrkbQAAO3l1awG_Dc4k-WNesn3MCVVF0wZEyhNb1-xmfG7q5GiNW5RH1bTt9VCaJgph7HWbOPBSQEkF6TduZlBVrHqXSiL7uoH_TEZPjnJLsLGbaCgYKAZ4SARASFQHUCsbCTHLjvbz2tZQd9WO11YFRxA0163",
+  "expires_in": 3599,
+  "refresh_token": "1//0gu6RP4R5LojNCgYIARAAGBASNwF-L9Ir--YVLI_oYfv8eA238u2BcvxDI7BVBFo7dB0WgVwoqkMa3XegE4RPfGVMfW0OFe_x260",
+  "scope": "https://www.googleapis.com/auth/spreadsheets",
+  "token_type": "Bearer"
+}
+
+*******************************************************************************************************************************************************************************
+DUMMY DETAILS-->
+account name:testing
+account id: testing
+testing@testingagain-373705.iam.gserviceaccount.com
+
+client id: 411723988585-8are1ehf1f8r5b2rkim4s941i86atmo6.apps.googleusercontent.com
+client secret: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
+
+http://localhost/?state=state_parameter_passthrough_value&code=4/0AWgavddhwEeYM72emeqEsZ-TQAC4E-4Myy7QePYn1nSDzYQrjr7Mxy57Cuct_9Z1Dc558w&scope=https://www.googleapis.com/auth/spreadsheets
+
+code: 4/0AWgavddhwEeYM72emeqEsZ-TQAC4E-4Myy7QePYn1nSDzYQrjr7Mxy57Cuct_9Z1Dc558w
+
+$ curl \
+--request POST \
+--data "code=4/0AWgavddhwEeYM72emeqEsZ-TQAC4E-4Myy7QePYn1nSDzYQrjr7Mxy57Cuct_9Z1Dc558w&client_id=411723988585-8are1ehf1f8r5b2rkim4s941i86atmo6.apps.googleusercontent.com&client_secret=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&redirect_uri=http://localhost&grant_type=authorization_code" \
+https://accounts.google.com/o/oauth2/token
+{
+  "access_token": "ya29.a0AX9GBdUfht21g5BgljpRspIt2pJ5a9jj3ORSYCrqzsO12QirT5JCDt5CMHimb2tkWauBIWsls40BiiL5Yv7NTCpMsoHHg23LtKmp4nHrrpa7rZ8aNkBju9QbFHxaSArFlF5OCgbHySbSr23_91_jlYutZarhaCgYKAToSARMSFQHUCsbCZtVQ3FjJYQhUvxP3rZpV1Q0163",
+  "expires_in": 3599,
+  "refresh_token": "1//0gb1E5hZ0Ik8tCgYIARAAGBASNwF-L9Ir2LVGQRGAl_H70cDZ0I8-1pHLfJPvOXUdGw-EWsofbngErpDxLRDAsI-Vw0o3OlYG8Bo",
+  "scope": "https://www.googleapis.com/auth/spreadsheets",
+  "token_type": "Bearer"
+}
+
+
+sheets: https://docs.google.com/spreadsheets/d/1taWMMtuYlUJ6hE80kiL1tyuxq2wQy2AfB1CG6xFGISE/edit?usp=sharing

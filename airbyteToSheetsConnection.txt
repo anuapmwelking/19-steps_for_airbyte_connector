@@ -1,0 +1,101 @@
+-----------------------------------------------------------------------------------------------------------
+First creating the source -- Google Analytics(Universal Analytics)
+
+1. Add source type
+2. Add your name
+3. Go to google cloud console
+4. Create a new project
+5. enable these api:Analytics Reporting API, Google Analytics API
+6. create a service account : copy the account name ,id and most important service email
+7. now go to service account creadentials -> create a new json key and download it
+8. copy the entire key and go to airbyte
+9. in the credentials section -> paste your entire json key downloaded from console.cloud.google.com
+10. enter the replication or start date
+11. get the analytics view id from :https://ga-dev-tools.web.app/account-explorer/
+12. copy your view id and paste in airbyte view id section
+13. make sure add your service account email in analytics view managment section in the admin pannel(crux give the permission for view for your service account)
+14. test your source
+
+-----------------------------------------------------------------------------------------------------------
+For Creating a Destination - Google Sheets
+
+1. Go to same project created for source
+2. Enable google sheets api
+3. add the destination type google sheets in airbyte
+4. add your destination name
+5. go to console.cloud.google.com in your project and go to credentials
+6. First configure your consent screeen to enable google OAuth security
+7. after setting up consent screen go to credentials
+8. create new credentials for google Oauth
+9. select web app
+10. \*\* must add test user and redirect uri: http://localhost
+11. now for creating refresh token follow these steps:
+    first create a coode for URL
+    ---------------------use this link to create a code for the current client------------------ make sure to add authorised uri: http://localhost and test user permission-----
+    https://accounts.google.com/o/oauth2/v2/auth?
+    scope=https://www.googleapis.com/auth/spreadsheets&
+    access_type=offline&
+    include_granted_scopes=true&
+    response_type=code&
+    state=state_parameter_passthrough_value&
+    redirect_uri=http://localhost&
+    client_id=411723988585-8are1ehf1f8r5b2rkim4s941i86atmo6.apps.googleusercontent.com
+    ----result-----
+    http://localhost/?state=state_parameter_passthrough_value&code=4/0AWgavdeDVIJetX-nxklst3gvY71xeF2nqQIPSMjhUiMm3woSRmV9uil8HyWkmknD13EvLw&scope=https://www.googleapis.com/auth/spreadsheets
+
+    **extract the code\*** from url Received
+    code--4/0AWgavdeDVIJetX-nxklst3gvY71xeF2nqQIPSMjhUiMm3woSRmV9uil8HyWkmknD13EvLw
+
+---
+
+---
+
+---------------------use this after create code add required fields use curl commands in gitbash-------------------------------------------------
+curl \
+--request POST \
+--data "code=code--4/0AWgavdeDVIJetX-nxklst3gvY71xeF2nqQIPSMjhUiMm3woSRmV9uil8HyWkmknD13EvLw&client_id=411723988585-8are1ehf1f8r5b2rkim4s941i86atmo6.apps.googleusercontent.com&client_secret=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&redirect_uri=http://localhost&grant_type=authorization_code" \
+https://accounts.google.com/o/oauth2/token
+
+---
+
+RESULT:
+{
+"access_token": "ya29.a0AX9GBdVrXfh_MZhFdz-8JYPM5IjBVuN_GGGUBdgfzxfEgvrkbQAAO3l1awG_Dc4k-WNesn3MCVVF0wZEyhNb1-xmfG7q5GiNW5RH1bTt9VCaJgph7HWbOPBSQEkF6TduZlBVrHqXSiL7uoH_TEZPjnJLsLGbaCgYKAZ4SARASFQHUCsbCTHLjvbz2tZQd9WO11YFRxA0163",
+"expires_in": 3599,
+"refresh_token": "1//0gu6RP4R5LojNCgYIARAAGBASNwF-L9Ir--YVLI_oYfv8eA238u2BcvxDI7BVBFo7dB0WgVwoqkMa3XegE4RPfGVMfW0OFe_x260",
+"scope": "https://www.googleapis.com/auth/spreadsheets",
+"token_type": "Bearer"
+}
+
+---
+
+DUMMY DETAILS-->
+account name:testing
+account id: testing
+testing@testingagain-373705.iam.gserviceaccount.com
+
+client id: 411723988585-8are1ehf1f8r5b2rkim4s941i86atmo6.apps.googleusercontent.com
+client secret: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
+
+http://localhost/?state=state_parameter_passthrough_value&code=4/0AWgavddhwEeYM72emeqEsZ-TQAC4E-4Myy7QePYn1nSDzYQrjr7Mxy57Cuct_9Z1Dc558w&scope=https://www.googleapis.com/auth/spreadsheets
+
+code: 4/0AWgavddhwEeYM72emeqEsZ-TQAC4E-4Myy7QePYn1nSDzYQrjr7Mxy57Cuct_9Z1Dc558w
+
+$ curl \
+--request POST \
+--data "code=4/0AWgavddhwEeYM72emeqEsZ-TQAC4E-4Myy7QePYn1nSDzYQrjr7Mxy57Cuct_9Z1Dc558w&client_id=411723988585-8are1ehf1f8r5b2rkim4s941i86atmo6.apps.googleusercontent.com&client_secret=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&redirect_uri=http://localhost&grant_type=authorization_code" \
+https://accounts.google.com/o/oauth2/token
+{
+"access_token": "ya29.a0AX9GBdUfht21g5BgljpRspIt2pJ5a9jj3ORSYCrqzsO12QirT5JCDt5CMHimb2tkWauBIWsls40BiiL5Yv7NTCpMsoHHg23LtKmp4nHrrpa7rZ8aNkBju9QbFHxaSArFlF5OCgbHySbSr23_91_jlYutZarhaCgYKAToSARMSFQHUCsbCZtVQ3FjJYQhUvxP3rZpV1Q0163",
+"expires_in": 3599,
+"refresh_token": "1//0gb1E5hZ0Ik8tCgYIARAAGBASNwF-L9Ir2LVGQRGAl_H70cDZ0I8-1pHLfJPvOXUdGw-EWsofbngErpDxLRDAsI-Vw0o3OlYG8Bo",
+"scope": "https://www.googleapis.com/auth/spreadsheets",
+"token_type": "Bearer"
+}
+
+sheets: https://docs.google.com/spreadsheets/d/1taWMMtuYlUJ6hE80kiL1tyuxq2wQy2AfB1CG6xFGISE/edit?usp=sharing
+************************************************************************************************************************************************
+12. paste the refrest token in airbyte
+13. test the destination
+14. Setup the connection
+15. select the DETAILS you want to sync
